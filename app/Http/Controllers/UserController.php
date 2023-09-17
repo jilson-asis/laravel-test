@@ -140,4 +140,21 @@ class UserController extends Controller
         return redirect()->route('users.index')
             ->with('success','User deleted successfully');
     }
+
+    /**
+     * @param Request $request
+     * @param User $user
+     * @return RedirectResponse
+     */
+    public function cancel(Request $request, User $user): RedirectResponse
+    {
+        $roles = $user->getRoleNames();
+
+        foreach ($roles as $role) {
+            $user->removeRole($role);
+        }
+
+        return redirect()->route('users.index')
+            ->with('success', 'Removed User access successfully');
+    }
 }

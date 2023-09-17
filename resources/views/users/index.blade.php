@@ -27,7 +27,7 @@
             <th>Name</th>
             <th>Email</th>
             <th>User Type</th>
-            <th width="280px">Action</th>
+            <th width="350px">Action</th>
         </tr>
         @foreach ($data as $key => $user)
             <tr>
@@ -38,6 +38,7 @@
                 <td>
                     <a class="btn btn-info" href="{{ route('users.show',$user->id) }}">Show</a>
                     <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">Edit</a>
+                    <a class="btn btn-danger" href="{{ route('users.cancel', $user) }}">Cancel</a>
                     {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}
                     {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
                     {!! Form::close() !!}

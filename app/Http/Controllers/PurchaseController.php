@@ -17,7 +17,7 @@ class PurchaseController extends Controller
 {
     public function __construct()
     {
-
+        $this->middleware('permission:modify-access|purchase-list');
     }
 
     public function index(Request $request)

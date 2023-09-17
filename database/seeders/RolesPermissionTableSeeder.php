@@ -21,6 +21,7 @@ class RolesPermissionTableSeeder extends Seeder
                 'product-edit',
                 'product-delete',
                 'modify-access',
+                'purchase-list',
             ],
             'b2c-user' => [
                 'purchase-list'

@@ -29,6 +29,7 @@ Route::get('/checkout/{product}', [PurchaseController::class, 'checkout'])->name
 Route::post('/checkout/purchase/{product}', [PurchaseController::class, 'purchase'])->name('purchase.purchase');
 
 Route::group(['middleware' => ['auth']], function() {
+    Route::get('/users/cancel/{user}', [UserController::class, 'cancel'])->name('users.cancel');
     Route::resource('users', UserController::class);
     Route::resource('products', ProductController::class);
     Route::resource('purchases', PurchaseController::class);
