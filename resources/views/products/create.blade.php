@@ -39,8 +39,23 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>Detail:</strong>
+                    <strong>Price:</strong>
+                    <input type="number" name="price" class="form-control" placeholder="1.00">
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Description:</strong>
                     <textarea class="form-control" style="height:150px" name="detail" placeholder="Detail"></textarea>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Type:</strong>
+                    <select name="type" id="">
+                        <option value="b2c">B2C</option>
+                        <option value="b2b">B2B</option>
+                    </select>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 text-center">

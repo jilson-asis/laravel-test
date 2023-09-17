@@ -17,17 +17,17 @@ use App\Http\Controllers\ProductController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
+Route::get('/', [HomeController::class, 'index'])->name('index');
+Route::get('/home', [HomeController::class, 'index'])->name('products');
+
+Route::get('/checkout', [ProductController::class, 'checkout'])->name('checkout');
+Route::get('/checkout/success', [ProductController::class, 'success'])->name('checkout.success');
+Route::get('/checkout/cancel', [ProductController::class, 'cancel'])->name('checkout.cancel');
 
 Route::group(['middleware' => ['auth']], function() {
-    Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
+    Route::resource('roles', RoleController::class);
     Route::resource('products', ProductController::class);
 });
