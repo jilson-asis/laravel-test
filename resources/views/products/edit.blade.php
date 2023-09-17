@@ -35,13 +35,28 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Name:</strong>
-                    <input type="text" name="name" value="{{ $product->name }}" class="form-control" placeholder="Name">
+                    <input type="text" name="name" class="form-control" placeholder="Name" value="{{ $product->name }}">
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>Detail:</strong>
+                    <strong>Price:</strong>
+                    <input type="number" name="price" class="form-control" placeholder="1.00" value="{{ $product->price }}">
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Description:</strong>
                     <textarea class="form-control" style="height:150px" name="detail" placeholder="Detail">{{ $product->detail }}</textarea>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>Type:</strong>
+                    <select name="type" id="">
+                        <option {{ $product->name === 'b2c' ? 'selected' : '' }} value="b2c">B2C</option>
+                        <option {{ $product->name === 'b2b' ? 'selected' : '' }} value="b2b">B2B</option>
+                    </select>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 text-center">

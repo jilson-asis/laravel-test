@@ -20,7 +20,7 @@ use App\Http\Controllers\ProductController;
 Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('index');
-Route::get('/home', [HomeController::class, 'index'])->name('products');
+//Route::get('/home', [HomeController::class, 'index'])->name('products');
 
 Route::get('/checkout', [ProductController::class, 'checkout'])->name('checkout');
 Route::get('/checkout/success', [ProductController::class, 'success'])->name('checkout.success');

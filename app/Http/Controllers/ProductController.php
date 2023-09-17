@@ -97,7 +97,9 @@ class ProductController extends Controller
     {
         request()->validate([
             'name' => 'required',
+            'price' => 'required',
             'detail' => 'required',
+            'type' => 'required',
         ]);
 
         $product->update($request->all());
