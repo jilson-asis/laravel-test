@@ -21,16 +21,15 @@ use App\Http\Controllers\ProductController;
 Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('index');
-//Route::get('/home', [HomeController::class, 'index'])->name('products');
+Route::get('/home', [HomeController::class, 'index'])->name('index');
 
 Route::get('/checkout/success', [PurchaseController::class, 'success'])->name('purchase.success');
-Route::get('/checkout/cancel', [PurchaseController::class, 'cancel'])->name('purchase.cancel');
+//Route::get('/checkout/cancel', [PurchaseController::class, 'cancel'])->name('purchase.cancel');
 Route::get('/checkout/{product}', [PurchaseController::class, 'checkout'])->name('purchase.checkout');
 Route::post('/checkout/purchase/{product}', [PurchaseController::class, 'purchase'])->name('purchase.purchase');
 
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('users', UserController::class);
-    Route::resource('roles', RoleController::class);
     Route::resource('products', ProductController::class);
     Route::resource('purchases', PurchaseController::class);
 });

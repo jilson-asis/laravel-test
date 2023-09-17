@@ -48,9 +48,9 @@ class User extends Authenticatable
     /**
      * Get the phone associated with the user.
      */
-    public function products(): HasMany
+    public function purchases(): HasMany
     {
-        return $this->hasMany(Product::class);
+        return $this->hasMany(Purchase::class);
     }
 
 

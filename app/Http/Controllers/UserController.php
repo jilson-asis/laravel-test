@@ -14,6 +14,11 @@ use Illuminate\Http\RedirectResponse;
 
 class UserController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:modify-access');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +26,7 @@ class UserController extends Controller
      */
     public function index(Request $request): View
     {
-        $data = User::latest()->paginate(5);
+        $data = User::latest()->paginate(20);
 
         return view('users.index',compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * 5);

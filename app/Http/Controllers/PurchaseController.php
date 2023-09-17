@@ -20,11 +20,15 @@ class PurchaseController extends Controller
 
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $purchases = Purchase::latest()->paginate(10);
-        $user = auth()->user();
-        return view('purchase.index', compact('purchases' ,'user'));
+        if ($request->user()->can('manage-access')) {
+            $purchases = Purchase::latest()->paginate(10);
+        } else {
+            $purchases = $request->user()->purchases;
+        }
+
+        return view('purchase.index', compact('purchases'));
     }
 
     public function checkout(Request $request, Product $product)
@@ -52,7 +56,7 @@ class PurchaseController extends Controller
             'password' => bcrypt($request->get('password')),
         ]);
 
-        $role = Role::findByName($product->type);
+        $role = Role::findByName($product->type . '-user');
 
         $newUser->assignRole([$role->id]);
 
@@ -67,11 +71,10 @@ class PurchaseController extends Controller
         $stripe = new StripeClient(env('STRIPE_SECRET'));
 
         $checkoutSession = $request->user()->stripe()->checkout->sessions->retrieve($request->get('session_id'));
-
         $intent = $stripe->paymentIntents->retrieve($checkoutSession->payment_intent);
         $paymentMethod = $stripe->paymentMethods->retrieve($intent->payment_method);
         $last4 = $paymentMethod->card->last4;
-        $user = $request->user();
+        $user = User::where('email', $checkoutSession->customer_details->email)->first();
 
         Purchase::create([
             'user_id' => $user->id,

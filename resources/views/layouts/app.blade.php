@@ -41,9 +41,16 @@
                             </li>
                         @endif
                     @else
-                        <li><a class="nav-link" href="{{ route('users.index') }}">Manage Users</a></li>
-                        <li><a class="nav-link" href="{{ route('products.index') }}">Manage Product</a></li>
-                        <li><a class="nav-link" href="{{ route('purchases.index') }}">Purchases</a></li>
+                        @if (Auth::user()->can('modify-access'))
+                            <li><a class="nav-link" href="{{ route('users.index') }}">Manage Users</a></li>
+                        @endif
+                        @if (Auth::user()->can('product-list'))
+                                <li><a class="nav-link" href="{{ route('products.index') }}">Manage Product</a></li>
+                                <li><a class="nav-link" href="{{ route('purchases.index') }}">Purchases</a></li>
+                        @endif
+                        @if (Auth::user()->can('purchase-list'))
+                            <li><a class="nav-link" href="{{ route('purchases.index') }}">Purchases</a></li>
+                        @endif
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->name }}
