@@ -22,10 +22,10 @@ class PurchaseController extends Controller
 
     public function index(Request $request)
     {
-        if ($request->user()->can('manage-access')) {
+        if ($request->user()->can('modify-access')) {
             $purchases = Purchase::latest()->paginate(10);
         } else {
-            $purchases = $request->user()->purchases;
+            $purchases = $request->user()->purchases()->paginate();
         }
 
         return view('purchase.index', compact('purchases'));
