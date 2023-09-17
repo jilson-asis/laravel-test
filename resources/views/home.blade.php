@@ -16,7 +16,7 @@
                                             {{ $product->detail }}
                                         </div>
                                         <div>Price: {{ $product->price }}</div>
-                                        <a href="{{ route('purchase.checkout') }}" type="button" class="btn btn-primary">Buy</a>
+                                        <a href="{{ route('purchase.checkout', ['pid' => $product->id]) }}" type="button" class="btn btn-primary">Buy</a>
                                     </div>
                             </div>
                         </div>

@@ -70,7 +70,6 @@ class ProductController extends Controller
         $newPrice = $stripe->prices->create([
             'unit_amount' => $request->get('price') * 100,
             'currency' => 'usd',
-            'recurring' => ['interval' => 'year'],
             'product' => $newProduct->id,
         ]);
 

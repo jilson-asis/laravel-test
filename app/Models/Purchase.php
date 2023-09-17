@@ -15,6 +15,10 @@ class Purchase extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'payment_reference',
+        'user_id',
+        'payment_reference',
+        'last_four',
+        'payment_intent_id',
+        'payment_method_id',
     ];
 }

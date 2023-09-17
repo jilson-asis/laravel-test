@@ -15,32 +15,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-//        $stripe = Cashier::stripe();
-//        $stripeProducts = $stripe->products->all();
-//
-//        $stripePrices = $stripe->prices->all();
-//        $products = [];
-//        $priceMap = [];
-//
-//        foreach ($stripePrices as $stripePrice) {
-//            $priceMap[$stripePrice->product] = [
-//                'amount' => $stripePrice->unit_amount,
-//                'pid' => $stripePrice->id
-//            ];
-//        }
-//
-//        foreach ($stripeProducts as $stripeProduct) {
-//            $products[] = [
-//                'name' => $stripeProduct->name,
-//                'description' => $stripeProduct->description,
-//                'price' => number_format($priceMap[$stripeProduct->id]['amount']/100, 2),
-//                'images' => $stripeProduct->images,
-//                'pid' => $priceMap[$stripeProduct->id]['pid'],
-//            ];
-//        }
-//
-//        $products = json_decode(json_encode($products));
-
         $products = Product::latest()->paginate(10);
 
         return view('home', compact('products'));
