@@ -6,6 +6,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+use Stripe\StripeClient;
 
 class ProductController extends Controller
 {
@@ -58,7 +59,30 @@ class ProductController extends Controller
             'type' => 'required',
         ]);
 
-        Product::create($request->all());
+        // create the product in stripe
+        $stripe = new StripeClient(env('STRIPE_SECRET'));
+        $newProduct = $stripe->products->create([
+            'name' => $request->get('name'),
+            'description' => $request->get('detail'),
+            'metadata' => ['type' => $request->get('type')],
+        ]);
+
+        $newPrice = $stripe->prices->create([
+            'unit_amount' => $request->get('price') * 100,
+            'currency' => 'usd',
+            'recurring' => ['interval' => 'year'],
+            'product' => $newProduct->id,
+        ]);
+
+
+        Product::create([
+            'name' => $request->get('name'),
+            'price' => $request->get('price'),
+            'detail' => $request->get('detail'),
+            'type' => $request->get('type'),
+            'stripe_product_id' => $newProduct->id,
+            'stripe_price_id' => $newPrice->id,
+        ]);
 
         return redirect()->route('products.index')
             ->with('success','Product created successfully.');
