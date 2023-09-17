@@ -32,4 +32,5 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('users', UserController::class);
     Route::resource('roles', RoleController::class);
     Route::resource('products', ProductController::class);
+    Route::resource('purchases', PurchaseController::class);
 });

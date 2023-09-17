@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+use Spatie\Permission\Models\Role;
 use Stripe\Checkout\Session;
 use Stripe\Customer;
 use Stripe\StripeClient;
@@ -17,6 +18,13 @@ class PurchaseController extends Controller
     public function __construct()
     {
 
+    }
+
+    public function index()
+    {
+        $purchases = Purchase::latest()->paginate(10);
+        $user = auth()->user();
+        return view('purchase.index', compact('purchases' ,'user'));
     }
 
     public function checkout(Request $request, Product $product)
@@ -42,8 +50,11 @@ class PurchaseController extends Controller
             'name' => $request->get('name'),
             'email' => $request->get('email'),
             'password' => bcrypt($request->get('password')),
-            'type' => $product->type
         ]);
+
+        $role = Role::findByName($product->type);
+
+        $newUser->assignRole([$role->id]);
 
         return $newUser->checkout($product->stripe_price_id, [
             'success_url' => route('purchase.success').'?session_id={CHECKOUT_SESSION_ID}',
@@ -60,17 +71,17 @@ class PurchaseController extends Controller
         $intent = $stripe->paymentIntents->retrieve($checkoutSession->payment_intent);
         $paymentMethod = $stripe->paymentMethods->retrieve($intent->payment_method);
         $last4 = $paymentMethod->card->last4;
-
+        $user = $request->user();
 
         Purchase::create([
-            'user_id' => $request->user()->id,
+            'user_id' => $user->id,
             'payment_reference' => $checkoutSession->id,
             'last_four' => $last4,
             'payment_intent_id' => $checkoutSession->payment_intent,
             'payment_method_id' => $intent->payment_method,
         ]);
 
-        dd(json_encode($request->toArray()));
+        return view('purchase.success', compact('user'));
     }
 
     public function cancel(Request $request)

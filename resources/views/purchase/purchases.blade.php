@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="float-start">
-                <h2>Users Management</h2>
+                <h2>Purchases</h2>
             </div>
             <div class="float-end">
                 <a class="btn btn-success" href="{{ route('users.create') }}"> Create New User</a>
@@ -29,7 +29,7 @@
             <th>User Type</th>
             <th width="280px">Action</th>
         </tr>
-        @foreach ($data as $key => $user)
+        @foreach ($purchases as $key => $user)
             <tr>
                 <td>{{ ++$i }}</td>
                 <td>{{ $user->name }}</td>
@@ -46,7 +46,7 @@
         @endforeach
     </table>
 
-    {!! $data->render() !!}
+    {!! $purchases->render() !!}
 
 
 @endsection

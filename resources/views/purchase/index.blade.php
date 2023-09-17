@@ -29,24 +29,19 @@
             <th>User Type</th>
             <th width="280px">Action</th>
         </tr>
-        @foreach ($data as $key => $user)
+        @foreach ($purchases as $key => $user)
             <tr>
                 <td>{{ ++$i }}</td>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->type }}</td>
                 <td>
-                    <a class="btn btn-info" href="{{ route('users.show',$user->id) }}">Show</a>
-                    <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">Edit</a>
-                    {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}
-                    {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-                    {!! Form::close() !!}
                 </td>
             </tr>
         @endforeach
     </table>
 
-    {!! $data->render() !!}
+    {!! $purchases->render() !!}
 
 
 @endsection
