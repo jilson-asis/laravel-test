@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -22,9 +23,10 @@ Auth::routes();
 Route::get('/', [HomeController::class, 'index'])->name('index');
 //Route::get('/home', [HomeController::class, 'index'])->name('products');
 
-Route::get('/checkout', [ProductController::class, 'checkout'])->name('checkout');
-Route::get('/checkout/success', [ProductController::class, 'success'])->name('checkout.success');
-Route::get('/checkout/cancel', [ProductController::class, 'cancel'])->name('checkout.cancel');
+Route::get('/checkout', [PurchaseController::class, 'checkout'])->name('purchase.checkout');
+Route::get('/checkout/purchase', [PurchaseController::class, 'purchase'])->name('purchase.purchase');
+Route::get('/checkout/success', [PurchaseController::class, 'success'])->name('purchase.success');
+Route::get('/checkout/cancel', [PurchaseController::class, 'cancel'])->name('purchase.cancel');
 
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('users', UserController::class);
