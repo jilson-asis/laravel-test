@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ProductPurchased;
 use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Spatie\Permission\Models\Role;
@@ -76,13 +78,16 @@ class PurchaseController extends Controller
         $last4 = $paymentMethod->card->last4;
         $user = User::where('email', $checkoutSession->customer_details->email)->first();
 
-        Purchase::create([
+        $purchase = Purchase::create([
             'user_id' => $user->id,
             'payment_reference' => $checkoutSession->id,
             'last_four' => $last4,
             'payment_intent_id' => $checkoutSession->payment_intent,
             'payment_method_id' => $intent->payment_method,
         ]);
+
+        // send email
+        Mail::to($user)->send(new ProductPurchased($purchase));
 
         return view('purchase.success', compact('user'));
     }
