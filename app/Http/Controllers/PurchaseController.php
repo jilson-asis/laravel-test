@@ -47,7 +47,7 @@ class PurchaseController extends Controller
 
         return $newUser->checkout($product->stripe_price_id, [
             'success_url' => route('purchase.success').'?session_id={CHECKOUT_SESSION_ID}',
-            'cancel_url' => route('purchase.cancel'),
+            'cancel_url' => route('purchase.checkout', $product),
         ]);
     }
 
